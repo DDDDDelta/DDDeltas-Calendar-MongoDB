@@ -425,6 +425,7 @@ class mainCalendar:
         return
 
     def deleteEventsInOneDay(self):
+        print("deleting stuff")
         return
 
     def deletingEvent(self):

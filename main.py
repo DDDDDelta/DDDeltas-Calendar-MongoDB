@@ -491,7 +491,12 @@ class mainCalendar:
             return
         self.dumpDictToJson(newDict)
 
+    def printIntro(self):
+        print("DESCRIPTION:")
+        print("\tthis is DDDelta's Calendar")
+
     def run(self):
+        self.printIntro()
         while True:
             try:
                 self.operationSelection()

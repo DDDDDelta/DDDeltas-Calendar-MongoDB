@@ -2,7 +2,7 @@
 # do not copy or use any code without author's permission
 
 
-class timeUtil:
+class TimeUtil:
     def __init__(self):
         self.minute = 60
         self.hour = 24
@@ -141,4 +141,4 @@ class timeUtil:
 
 
 if __name__ == '__main__':
-    t = timeUtil()
+    t = TimeUtil()

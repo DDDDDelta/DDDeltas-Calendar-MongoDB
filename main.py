@@ -1,44 +1,46 @@
 # This code is create by DDDelta for his own use
 # do not copy or use any code without author's permission
 
-import DATE
-import TIME
+import date_utils
+import time_utils
 import json
 import texttable
 
-timeUtil = TIME.timeUtil()
-dateUtil = DATE.dateUtil()
+import db_utils
+
+timeUtil = date_utils.TimeUtil()
+dateUtil = time_utils.DateUtil()
 
 
-class mainCalendar:
-
-    def __init__(self):
-        self.username = "DDDelta"
-        self.password = "040806"
+class Calendar:
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        self.connection = db_utils.MongoDBConnection(f"mongodb://{username}:{password}@localhost:25565", "database")
 
     def checkInputType(self,inp,typ):
         if typ == "str":
             try:
                 str(inp)
                 return True
-            except:
+            except Exception:
                 return False
         elif typ == "int":
             try:
                 int(inp)
                 return True
-            except:
+            except Exception:
                 return False
         elif typ == "float":
             try:
                 float(inp)
                 return True
-            except:
+            except Exception:
                 return False
         elif typ == "isoDate":
             try:
                 dateUtil.convertIsoToDate(inp)
-            except:
+            except Exception:
                 return False
         elif typ == "bool":
             return inp.lower() in ["true","false","t","f"]
@@ -116,7 +118,7 @@ class mainCalendar:
             else:
                 try:
                     dateUtil.convertIsoToDate(dates[i])
-                except:
+                except Exception:
                     return "error"
         return dates
 
@@ -130,7 +132,7 @@ class mainCalendar:
         # para2
         try:
             arr[1] = int(arr[1])
-        except:
+        except Exception:
             print("parameter 2 is invalid")
             return "error"
         # para3
@@ -148,11 +150,11 @@ class mainCalendar:
         date = True
         try:
             dateUtil.convertIsoToDate(arr[3])
-        except:
+        except Exception:
             date = False
         try:
             arr[3] = int(arr[3])
-        except:
+        except Exception:
             time = False
         if not (time or date):
             print("parameter 4 is invalid")
@@ -175,7 +177,7 @@ class mainCalendar:
         file = open("event.json","r")
         try:
             ret = json.load(file)
-        except:
+        except Exception:
             ret = {}
         finally:
             file.close()
@@ -185,7 +187,7 @@ class mainCalendar:
         file = open("event.json", "w")
         try:
             json.dump(dic, file)
-        except:
+        except Exception:
             print("unable to save")
         finally:
             file.close()
@@ -501,6 +503,7 @@ class mainCalendar:
             try:
                 self.operationSelection()
             except SystemExit:
+                self.connection.close()
                 input("press any key to end")
                 break
             except Exception:
@@ -509,5 +512,5 @@ class mainCalendar:
                 print("============================================warning============================================")
 
 if __name__ == '__main__':
-    calendar = mainCalendar()
+    calendar = Calendar("DDDelta", "040806")
     calendar.run()

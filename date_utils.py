@@ -4,7 +4,7 @@
 import datetime
 
 
-class dateUtil:
+class DateUtil:
     def __init__(self):
         self.todayDate = self.getTodayDate()
         self.todayYear, self.todayMonth, self.todayDay = self.todayDate.split("-")
